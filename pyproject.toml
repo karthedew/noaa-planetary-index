@@ -7,7 +7,7 @@ name = "noaa-planetary-index"
 version = "0.2.0"
 description = "NOAA Kp history, versioned Xarray DataTrees, Marimo, and resumable Airflow ingestion"
 readme = "README.md"
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.12,<3.14"
 dependencies = [
   "icechunk>=2.0,<3", "zarr>=3.1,<4", "xarray>=2025.9,<2027",
   "numpy>=2,<3", "pandas>=2.2,<4", "httpx>=0.28,<1",
