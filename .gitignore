@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.marimo/
+data/
+data-*/
+airflow-home/
+*.egg-info/
+dist/
+build/
+.env
+*.log
