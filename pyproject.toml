@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "noaa-planetary-index"
+version = "0.2.0"
+description = "NOAA Kp history, versioned Xarray DataTrees, Marimo, and resumable Airflow ingestion"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "icechunk>=2.0,<3", "zarr>=3.1,<4", "xarray>=2025.9,<2027",
+  "numpy>=2,<3", "pandas>=2.2,<4", "httpx>=0.28,<1",
+  "filelock>=3.16,<4", "marimo>=0.18,<1", "plotly>=6,<7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+airflow = ["apache-airflow==3.3.2"]
+
+[project.scripts]
+kp-ingest = "kp_demo.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kp_demo"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: requires real Icechunk and Zarr", "airflow: requires Airflow 3.3"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

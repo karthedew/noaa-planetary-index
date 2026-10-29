@@ -1,0 +1,28 @@
+name: tests
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.12'
+      - run: uv sync --extra dev
+      - run: uv run python -c "import icechunk, zarr, marimo"
+      - run: uv run ruff check src tests dags
+      - run: uv run pytest -q --ignore=tests/test_airflow_dags.py
+      - run: uv run python scripts/smoke.py
+      - run: uv run marimo check demo.py
+      - run: uv run marimo export html demo.py -o /tmp/demo.html
+  airflow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.12'
+      - run: uv sync --extra dev --extra airflow
+      - run: uv run pytest -q tests/test_airflow_dags.py
